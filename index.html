@@ -660,7 +660,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact">
+  <section id="contact">
       <div class="container">
         <div class="section-header reveal-element">
           <h2>Get In Touch</h2>
@@ -728,22 +728,22 @@
           <div class="contact-form-card reveal-element">
             <form id="contact-form">
               <div class="form-group">
-                <input type="text" id="form-name" class="form-input" placeholder=" " required autocomplete="name">
+                <input type="text" id="form-name" name="name" class="form-input" placeholder=" " required autocomplete="name">
                 <label for="form-name" class="form-label">Full Name</label>
               </div>
               
               <div class="form-group">
-                <input type="email" id="form-email" class="form-input" placeholder=" " required autocomplete="email">
+                <input type="email" id="form-email" name="email" class="form-input" placeholder=" " required autocomplete="email">
                 <label for="form-email" class="form-label">Email Address</label>
               </div>
               
               <div class="form-group">
-                <input type="text" id="form-subject" class="form-input" placeholder=" " required>
+                <input type="text" id="form-subject" name="title" class="form-input" placeholder=" " required>
                 <label for="form-subject" class="form-label">Subject</label>
               </div>
               
               <div class="form-group">
-                <textarea id="form-message" class="form-input" placeholder=" " required></textarea>
+                <textarea id="form-message" name="message" class="form-input" placeholder=" " required></textarea>
                 <label for="form-message" class="form-label">Your Message</label>
               </div>
               
@@ -757,7 +757,6 @@
     </section>
   </main>
 
-  <!-- Footer -->
   <footer>
     <div class="container">
       <p>© 2026 Rukundo Elie. All rights reserved.</p>
@@ -771,7 +770,6 @@
     </div>
   </footer>
 
-  <!-- Code Inspector Modal -->
   <div id="code-inspector-modal" class="code-modal">
     <div class="code-modal-content">
       <div class="code-modal-header">
@@ -789,7 +787,6 @@
     </div>
   </div>
 
-  <!-- Custom Greeting Prompt Modal -->
   <div id="greeting-modal" class="name-modal">
     <div class="name-modal-content">
       <div class="name-modal-icon">
@@ -808,7 +805,13 @@
     </div>
   </div>
 
-  <!-- Main JavaScript Logic -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript">
+     (function(){
+        emailjs.init("y1XcX6T3PkDdJCUaX");
+     })();
+  </script>
+
   <script src="index.js"></script>
 
 </body>

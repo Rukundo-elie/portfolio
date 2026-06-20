@@ -94,7 +94,9 @@ function initGreetingModal() {
 
 function updateWelcomeText(name) {
   const welcomeTextEl = document.getElementById("welcomeText");
-  welcomeTextEl.innerHTML = `DEAR <strong>${name.toUpperCase()}</strong>, WELCOME TO MY PORTFOLIO`;
+  if (welcomeTextEl) {
+    welcomeTextEl.innerHTML = `DEAR <strong>${name.toUpperCase()}</strong>, WELCOME TO MY PORTFOLIO`;
+  }
 }
 
 /* ==========================================================================
@@ -109,6 +111,7 @@ function initTypingEffect() {
   let typingSpeed = 100;
 
   function type() {
+    if (!typingTextEl) return;
     const currentWord = words[wordIndex];
     
     if (isDeleting) {
@@ -192,7 +195,10 @@ function initConsoleTabs() {
       });
       
       // Show matching content
-      document.getElementById(`tab-${activeTabId}`).style.display = "block";
+      const matchingContent = document.getElementById(`tab-${activeTabId}`);
+      if (matchingContent) {
+        matchingContent.style.display = "block";
+      }
     });
   });
 }
@@ -204,6 +210,8 @@ function initMobileMenu() {
   const toggleBtn = document.getElementById("mobile-menu-toggle");
   const navMenu = document.getElementById("nav-menu");
   const navLinks = document.querySelectorAll(".nav-link");
+
+  if (!toggleBtn || !navMenu) return;
 
   toggleBtn.addEventListener("click", () => {
     navMenu.classList.toggle("mobile-active");
@@ -345,6 +353,8 @@ function initCodeInspector() {
   const titleSpan = document.getElementById("code-modal-project-name");
   const codePane = document.getElementById("code-inspector-pane");
   const inspectButtons = document.querySelectorAll(".inspect-btn");
+
+  if (!modal || !closeBtn || !titleSpan || !codePane) return;
 
   // Simulated codebases for Elie's projects
   const mockCodebases = {
@@ -674,7 +684,7 @@ public class DynamicFibonacciSolver {
 }
 
 /* ==========================================================================
-   10. Contact Form Submissions with Interactive Feedback
+   10. Contact Form Submissions with Interactive Feedback (Live Backend Connection)
    ========================================================================== */
 function initContactForm() {
   const form = document.getElementById("contact-form");
@@ -684,29 +694,45 @@ function initContactForm() {
     e.preventDefault();
     
     const submitBtn = form.querySelector("button[type='submit']");
-    const name = document.getElementById("form-name").value.trim();
-    const email = document.getElementById("form-email").value.trim();
-    const subject = document.getElementById("form-subject").value.trim();
-    const message = document.getElementById("form-message").value.trim();
+    
+    // Explicitly targeting inputs via their synchronized HTML 'name' attribute
+    const nameInput = form.querySelector("input[name='name']");
+    const name = nameInput ? nameInput.value.trim() : "";
     
     // UI state indicator: Sending...
     const originalText = submitBtn.innerHTML;
     submitBtn.disabled = true;
     submitBtn.innerHTML = `Sending... <i class="fas fa-spinner fa-spin"></i>`;
     
-    // Simulate API request delay
-    setTimeout(() => {
-      // Revert button status
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalText;
-      
-      // Clear form inputs
-      form.reset();
-      
-      // Beautiful user feedback alert modal
-      const visitorName = localStorage.getItem("viewerName") || name || "Friend";
-      showSuccessAlert(visitorName);
-    }, 1500);
+    // EmailJS production credentials setup
+    const serviceID = 'service_g5t3rm4';   // Service ID
+    const templateID = 'template_e0k51d5'; // Template ID
+    
+    // Transmit data natively using the HTML Form Element
+    emailjs.sendForm(serviceID, templateID, form)
+      .then(() => {
+        // Revert button status back to normal
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+        
+        // Clear form inputs dynamically
+        form.reset();
+        
+        // Pull down saved user identity if present, otherwise default to form entry
+        const visitorName = localStorage.getItem("viewerName") || name || "Friend";
+        
+        // Trigger your custom success popup
+        showSuccessAlert(visitorName);
+      })
+      .catch((error) => {
+        // Reset interactive layout even if it fails
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+        
+        // Handle delivery exceptions smoothly
+        alert("Failed to send message. Please verify internet connectivity or try again later.");
+        console.error("EmailJS Error Log:", error);
+      });
   });
 }
 
