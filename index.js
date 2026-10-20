@@ -103,7 +103,13 @@ function updateWelcomeText(name) {
    3. Typing Effect in Hero Section
    ========================================================================== */
 function initTypingEffect() {
-  const words = ["Computer Systems", "High-Performance Software", "Interactive Web Apps", "Robust Solutions"];
+  const words = [
+    "Computer Systems",
+    "Full-Stack Web Apps (React & Node.js)",
+    "High-Performance Software",
+    "Interactive Web Experiences",
+    "Cloud & IoT Solutions"
+  ];
   const typingTextEl = document.getElementById("typing-text");
   let wordIndex = 0;
   let charIndex = 0;
@@ -641,6 +647,50 @@ public class DynamicFibonacciSolver {
         System.out.printf("Fibonacci(%d) = %d%n", n, result);
         System.out.printf("Execution time: %.4f milliseconds.%n", (endTime - startTime) / 1e6);
     }
+}`,
+    wedding_planner: `// Wedding Planner & Budgeting Platform - Client Budget & Booking Engine (TypeScript/ES6)
+class WeddingPlannerEngine {
+    private budgetAllocations: Map<string, number> = new Map();
+    private confirmedVendors: Array<{ id: string; category: string; cost: number }> = [];
+
+    constructor(private totalBudget: number, private clientName: string) {
+        this.initializeBudgetPlan();
+    }
+
+    private initializeBudgetPlan(): void {
+        // Industry-standard wedding budgeting model
+        this.budgetAllocations.set('venue_catering', this.totalBudget * 0.45);
+        this.budgetAllocations.set('photography_video', this.totalBudget * 0.15);
+        this.budgetAllocations.set('decor_florals', this.totalBudget * 0.12);
+        this.budgetAllocations.set('attire_beauty', this.totalBudget * 0.10);
+        this.budgetAllocations.set('entertainment', this.totalBudget * 0.10);
+        this.budgetAllocations.set('contingency', this.totalBudget * 0.08);
+    }
+
+    public bookVendor(vendorId: string, category: string, quote: number): { success: boolean; balanceRemaining: number } {
+        const allocated = this.budgetAllocations.get(category) || 0;
+        if (quote > allocated) {
+            console.warn(\`[Budget Alert] \${category} quote exceeds planned budget allocation.\`);
+        }
+        
+        this.confirmedVendors.push({ id: vendorId, category, cost: quote });
+        const remaining = allocated - quote;
+        return {
+            success: true,
+            balanceRemaining: Math.max(0, remaining)
+        };
+    }
+
+    public getSpendingSummary(): object {
+        const totalSpent = this.confirmedVendors.reduce((acc, curr) => acc + curr.cost, 0);
+        return {
+            client: this.clientName,
+            totalBudget: this.totalBudget,
+            totalSpent,
+            remainingBudget: this.totalBudget - totalSpent,
+            vendorCount: this.confirmedVendors.length
+        };
+    }
 }`
   };
 
@@ -656,7 +706,8 @@ public class DynamicFibonacciSolver {
         sms: "Student DB Swing Controller (Java)",
         restaurant_sys: "Restaurant Billing Queue (PHP/MySQL)",
         bdc_web: "BDC Applicant Portal (Django/Python)",
-        question_solve: "Question-Solve Benchmarker (Java)"
+        question_solve: "Question-Solve Benchmarker (Java)",
+        wedding_planner: "Wedding Planner & Budgeting Engine (TypeScript/JS)"
       };
 
       if (code) {
